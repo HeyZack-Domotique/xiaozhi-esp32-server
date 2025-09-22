@@ -7,7 +7,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN curl -fL --progress-bar https://modelscope.cn/models/iic/SenseVoiceSmall/resolve/master/model.pt -o /app/model.pt
+RUN curl -fL https://modelscope.cn/models/iic/SenseVoiceSmall/resolve/master/model.pt -o /app/model.pt
 
 # Phase 1: Building Python dependencies
 FROM python:3.10-slim AS builder
