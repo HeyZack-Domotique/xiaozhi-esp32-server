@@ -1,6 +1,8 @@
 # 部署架构图
+
 ![请参考-最简化架构图](../docs/images/deploy1.png)
-# 方式一：Docker只运行Server
+
+## 方式一：Docker只运行Server
 
 docker镜像已支持x86架构、arm64架构的CPU，支持在国产操作系统上运行。
 
@@ -20,7 +22,7 @@ docker镜像已支持x86架构、arm64架构的CPU，支持在国产操作系统
 
 最终目录结构如下所示：
 
-```
+``` console
 xiaozhi-server
   ├─ data
   ├─ models
@@ -56,7 +58,7 @@ xiaozhi-server
 
 下载完配置文件后，我们确认一下整个`xiaozhi-server`里面的文件如下所示：
 
-```
+```console
 xiaozhi-server
   ├─ docker-compose.yml
   ├─ data
@@ -79,13 +81,13 @@ xiaozhi-server
 
 打开命令行工具，使用`终端`或`命令行`工具 进入到你的`xiaozhi-server`，执行以下命令
 
-```
+```bash
 docker-compose up -d
 ```
 
 执行完后，再执行以下命令，查看日志信息。
 
-```
+```bash
 docker logs -f xiaozhi-esp32-server
 ```
 
@@ -100,7 +102,7 @@ docker logs -f xiaozhi-esp32-server
 
 5.2、执行以下命令
 
-```
+```bash
 docker stop xiaozhi-esp32-server
 docker rm xiaozhi-esp32-server
 docker stop xiaozhi-esp32-server-web
@@ -111,7 +113,7 @@ docker rmi ghcr.nju.edu.cn/xinnan-tech/xiaozhi-esp32-server:web_latest
 
 5.3、重新按docker方式部署
 
-# 方式二：本地源码只运行Server
+## 方式二：本地源码只运行Server
 
 ## 1.安装基础环境
 
@@ -127,7 +129,7 @@ docker rmi ghcr.nju.edu.cn/xinnan-tech/xiaozhi-esp32-server:web_latest
 
 ![conda_env](./images/conda_env_2.png)
 
-```
+```bash
 conda remove -n xiaozhi-esp32-server --all -y
 conda create -n xiaozhi-esp32-server python=3.10 -y
 conda activate xiaozhi-esp32-server
@@ -154,7 +156,7 @@ conda install ffmpeg -y
 点击它，下载本项目源码压缩包。下载到你电脑后，解压它，此时它的名字可能叫`xiaozhi-esp32-server-main`
 你需要把它重命名成`xiaozhi-esp32-server`，在这个文件里，进入到`main`文件夹，再进入到`xiaozhi-server`，好了请记住这个目录`xiaozhi-server`。
 
-```
+```bash
 # 继续使用conda环境
 conda activate xiaozhi-esp32-server
 # 进入到你的项目根目录，再进入main/xiaozhi-server
@@ -177,15 +179,15 @@ pip install -r requirements.txt
 
 ## 5.运行项目
 
-```
+```bash
 # 确保在xiaozhi-server目录下执行
 conda activate xiaozhi-esp32-server
 python app.py
 ```
+
 这时，你就要留意日志信息，可以根据这个教程，判断是否成功了。[跳转到运行状态确认](#运行状态确认)
 
-
-# 汇总
+## 汇总
 
 ## 配置项目
 
@@ -200,7 +202,7 @@ python app.py
 
 以下是一个能正常跑起来的，最简单的`.config.yaml`配置示例
 
-```
+```yaml
 server:
   websocket: ws://你的ip或者域名:端口号/xiaozhi/v1/
 prompt: |
@@ -234,7 +236,7 @@ LLM:
 
 如果你能看到，类似以下日志,则是本项目服务启动成功的标志。
 
-```
+```log
 250427 13:04:20[0.3.11_SiFuChTTnofu][__main__]-INFO-OTA接口是           http://192.168.4.123:8003/xiaozhi/ota/
 250427 13:04:20[0.3.11_SiFuChTTnofu][__main__]-INFO-Websocket地址是     ws://192.168.4.123:8000/xiaozhi/v1/
 250427 13:04:20[0.3.11_SiFuChTTnofu][__main__]-INFO-=======上面的地址是websocket协议地址，请勿用浏览器访问=======
@@ -252,34 +254,41 @@ LLM:
 
 接下来，你就可以开始操作你的esp32设备了，你可以`自行编译esp32固件`也可以配置使用`虾哥编译好的1.6.1以上版本的固件`。两个任选一个
 
-1、 [编译自己的esp32固件](firmware-build.md)了。
+1. [编译自己的esp32固件](firmware-build.md)了。
+1. [基于虾哥编译好的固件配置自定义服务器](firmware-setting.md)了。
 
-2、 [基于虾哥编译好的固件配置自定义服务器](firmware-setting.md)了。
+### 常见问题
 
-# 常见问题
 以下是一些常见问题，供参考：
 
-1、[为什么我说的话，小智识别出来很多韩文、日文、英文](./FAQ.md)<br/>
-2、[为什么会出现“TTS 任务出错 文件不存在”？](./FAQ.md)<br/>
-3、[TTS 经常失败，经常超时](./FAQ.md)<br/>
-4、[使用Wifi能连接自建服务器，但是4G模式却接不上](./FAQ.md)<br/>
-5、[如何提高小智对话响应速度？](./FAQ.md)<br/>
-6、[我说话很慢，停顿时小智老是抢话](./FAQ.md)<br/>
-## 部署相关教程
-1、[如何自动拉取本项目最新代码自动编译和启动](./dev-ops-integration.md)<br/>
-2、[如何与Nginx集成](https://github.com/xinnan-tech/xiaozhi-esp32-server/issues/791)<br/>
-## 拓展相关教程
-1、[如何开启手机号码注册智控台](./ali-sms-integration.md)<br/>
-2、[如何集成HomeAssistant实现智能家居控制](./homeassistant-integration.md)<br/>
-3、[如何开启视觉模型实现拍照识物](./mcp-vision-integration.md)<br/>
-4、[如何部署MCP接入点](./mcp-endpoint-enable.md)<br/>
-5、[如何接入MCP接入点](./mcp-endpoint-integration.md)<br/>
-6、[如何开启声纹识别](./voiceprint-integration.md)<br/>
-10、[新闻插件源配置指南](./newsnow_plugin_config.md)<br/>
-## 语音克隆、本地语音部署相关教程
-1、[如何部署集成index-tts本地语音](./index-stream-integration.md)<br/>
-2、[如何部署集成fish-speech本地语音](./fish-speech-integration.md)<br/>
-3、[如何部署集成PaddleSpeech本地语音](./paddlespeech-deploy.md)<br/>
-## 性能测试教程
-1、[各组件速度测试指南](./performance_tester.md)<br/>
-2、[定期公开测试结果](https://github.com/xinnan-tech/xiaozhi-performance-research)<br/>
+1. [为什么会出现“TTS 任务出错 文件不存在”？](./FAQ.md)
+1. [TTS 经常失败，经常超时](./FAQ.md)
+1. [使用Wifi能连接自建服务器，但是4G模式却接不上](./FAQ.md)
+1. [如何提高小智对话响应速度？](./FAQ.md)
+1. [我说话很慢，停顿时小智老是抢话](./FAQ.md)
+
+### 部署相关教程
+
+1. [如何自动拉取本项目最新代码自动编译和启动](./dev-ops-integration.md)
+1. [如何与Nginx集成](https://github.com/xinnan-tech/xiaozhi-esp32-server/issues/791)
+
+### 拓展相关教程
+
+1. [如何开启手机号码注册智控台](./ali-sms-integration.md)
+1. [如何集成HomeAssistant实现智能家居控制](./homeassistant-integration.md)
+1. [如何开启视觉模型实现拍照识物](./mcp-vision-integration.md)
+1. [如何部署MCP接入点](./mcp-endpoint-enable.md)
+1. [如何接入MCP接入点](./mcp-endpoint-integration.md)
+1. [如何开启声纹识别](./voiceprint-integration.md)
+1. [新闻插件源配置指南](./newsnow_plugin_config.md)
+
+### 语音克隆、本地语音部署相关教程
+
+1. [如何部署集成index-tts本地语音](./index-stream-integration.md)
+2. [如何部署集成fish-speech本地语音](./fish-speech-integration.md)
+3. [如何部署集成PaddleSpeech本地语音](./paddlespeech-deploy.md)
+
+### 性能测试教程
+
+1. [各组件速度测试指南](./performance_tester.md)<br/>
+1. [定期公开测试结果](https://github.com/xinnan-tech/xiaozhi-performance-research)<br/>
