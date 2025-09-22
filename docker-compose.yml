@@ -27,8 +27,6 @@ services:
     volumes:
       # Configuration file directory
       - ./data:/opt/xiaozhi-esp32-server/data
-      # Model file mount is very important
-      - ./models/SenseVoiceSmall/model.pt:/opt/xiaozhi-esp32-server/models/SenseVoiceSmall/model.pt
 
   # manager-api和manager-web模块
   xiaozhi-esp32-server-web:
