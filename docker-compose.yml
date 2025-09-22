@@ -16,18 +16,18 @@ services:
     networks:
       - default
     ports:
-      # ws服务端
+      # ws server
       - "8000:8000"
-      # http服务的端口，用于视觉分析接口
+      # The port of the http service, used for visual analysis interface
       - "8003:8003"
     security_opt:
       - seccomp:unconfined
     environment:
       - TZ=Europe/Paris
     volumes:
-      # 配置文件目录
+      # Configuration file directory
       - ./data:/opt/xiaozhi-esp32-server/data
-      # 模型文件挂接，很重要
+      # Model file mount is very important
       - ./models/SenseVoiceSmall/model.pt:/opt/xiaozhi-esp32-server/models/SenseVoiceSmall/model.pt
 
   # manager-api和manager-web模块
@@ -49,12 +49,12 @@ services:
       - "8002:8002"
     environment:
       - TZ=Europe/Paris
-      - SPRING_DATASOURCE_DRUID_URL=jdbc:mysql://xiaozhi-esp32-server-db:3306/xiaozhi_esp32_server?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Europe/Paris&nullCatalogMeansCurrent=true&connectTimeout=30000&socketTimeout=30000&autoReconnect=true&failOverReadOnly=false&maxReconnects=10
-      - SPRING_DATASOURCE_DRUID_USERNAME=root
-      - SPRING_DATASOURCE_DRUID_PASSWORD=123456
-      - SPRING_DATA_REDIS_HOST=xiaozhi-esp32-server-redis
-      - SPRING_DATA_REDIS_PASSWORD=
-      - SPRING_DATA_REDIS_PORT=6379
+      - SPRING_DATASOURCE_DRUID_URL=${SPRING_DATASOURCE_DRUID_URL:-jdbc:mysql://xiaozhi-esp32-server-db:3306/xiaozhi_esp32_server?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Europe/Paris&nullCatalogMeansCurrent=true&connectTimeout=30000&socketTimeout=30000&autoReconnect=true&failOverReadOnly=false&maxReconnects=10}
+      - SPRING_DATASOURCE_DRUID_USERNAME=${MYSQL_ROOT_USERNAME:-root}
+      - SPRING_DATASOURCE_DRUID_PASSWORD=${MYSQL_ROOT_PASSWORD:-123456}
+      - SPRING_DATA_REDIS_HOST=${REDIS_HOST:-xiaozhi-esp32-server-redis}
+      - SPRING_DATA_REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - SPRING_DATA_REDIS_PORT=${REDIS_PORT:-6379}
     volumes:
       # 配置文件目录
       - ./uploadfile:/uploadfile
@@ -77,8 +77,8 @@ services:
       - ./mysql/data:/var/lib/mysql
     environment:
       - TZ=Europe/Paris
-      - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=xiaozhi_esp32_server
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-123456}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-xiaozhi_esp32_server}
       - MYSQL_INITDB_ARGS="--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci"
   # redis模块
   xiaozhi-esp32-server-redis:
