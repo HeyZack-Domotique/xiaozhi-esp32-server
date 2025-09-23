@@ -28,9 +28,6 @@ services:
           enabled: $${AUTH_ENABLED}
           allowed_devices:
             - $${ALLOWED_DEVICES}
-          tokens:
-            - token: $${TOKEN}
-              name: $${NAME}
       manager-api:
         url: $${MANAGER_API_URL}
         secret: $${MANAGER_API_SECRET}
