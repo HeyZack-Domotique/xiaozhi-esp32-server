@@ -20,6 +20,13 @@ services:
         port: $${SERVER_PORT}
         http_port: $${SERVER_HTTP_PORT}
         vision_explain: $${SERVER_VISION_EXPLAIN}
+        auth:
+          enabled: $${AUTH_ENABLED:false}
+          allowed_devices:
+            - "$${ALLOWED_DEVICES:-CB:5B:2C:76:D5:90}"
+          tokens:
+            - token: "$${TOKEN}"
+              name: "$${NAME}"
       manager-api:
         url: $${MANAGER_API_URL}
         secret: $${MANAGER_API_SECRET}
