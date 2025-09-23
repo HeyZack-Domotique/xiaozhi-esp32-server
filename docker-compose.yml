@@ -11,6 +11,10 @@ services:
       - SERVER_VISION_EXPLAIN=${SERVER_VISION_EXPLAIN:-http://xiaozhi-esp32-server-web:8002/mcp/vision/explain}
       - MANAGER_API_URL=${MANAGER_API_URL:-http://xiaozhi-esp32-server-web:8002/xiaozhi}
       - MANAGER_API_SECRET=${MANAGER_API_SECRET}
+      - AUTH_ENABLED=${AUTH_ENABLED}
+      - ALLOWED_DEVICES=${ALLOWED_DEVICES}
+      - TOKEN=${TOKEN}
+      - NAME=${NAME}
     command: |
       sh -c '
         mkdir -p /app/data
@@ -21,12 +25,12 @@ services:
         http_port: $${SERVER_HTTP_PORT}
         vision_explain: $${SERVER_VISION_EXPLAIN}
         auth:
-          enabled: $${AUTH_ENABLED:false}
+          enabled: $${AUTH_ENABLED}
           allowed_devices:
-            - "$${ALLOWED_DEVICES:-CB:5B:2C:76:D5:90}"
+            - $${ALLOWED_DEVICES}
           tokens:
-            - token: "$${TOKEN}"
-              name: "$${NAME}"
+            - token: $${TOKEN}
+              name: $${NAME}
       manager-api:
         url: $${MANAGER_API_URL}
         secret: $${MANAGER_API_SECRET}
