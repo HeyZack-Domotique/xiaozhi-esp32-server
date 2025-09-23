@@ -30,17 +30,17 @@ server:
   # 认证配置
   auth:
     # 是否启用认证
-    enabled: false
+    enabled: true
     # 设备的token，可以在编译固件的环节，写入你自己定义的token
     # 固件上的token和以下的token如果能对应，才能连接本服务端
     tokens:
-      - token: "your-token1" # 设备1的token
-        name: "your-device-name1"  # 设备1标识
-      - token: "your-token2"  # 设备2的token
-        name: "your-device-name2" # 设备2标识
+      - token: "LiqkGSIf5O" # 设备1的token
+        name: "web_test_client" # 设备1标识
+      # - token: "your-token2" # 设备2的token
+      #   name: "your-device-name2" # 设备2标识
     # 可选:设备白名单，如果设置了白名单，那么白名单的机器无论是什么token都可以连接。
-    #allowed_devices:
-    #  - "24:0A:C4:1D:3B:F0"  # MAC地址列表
+    allowed_devices:
+      - "CB:5B:2C:76:D5:90" # MAC地址列表
 log:
   # 设置控制台输出的日志格式，时间、日志级别、标签、消息
   log_format: "<green>{time:YYMMDD HH:mm:ss}</green>[{version}_{selected_module}][<light-blue>{extra[tag]}</light-blue>]-<level>{level}</level>-<light-green>{message}</light-green>"
@@ -135,7 +135,7 @@ plugins:
     base_url: http://homeassistant.local:8123
     api_key: 你的home assistant api访问令牌
   play_music:
-    music_dir: "./music"  # 音乐文件存放路径，将从该目录及子目录下搜索音乐文件
+    music_dir: "./music" # 音乐文件存放路径，将从该目录及子目录下搜索音乐文件
     music_ext: # 音乐文件类型，p3格式效率最高
       - ".mp3"
       - ".wav"
@@ -145,7 +145,7 @@ plugins:
 # 声纹识别配置
 voiceprint:
   # 声纹接口地址
-  url: 
+  url:
   # 说话人配置：speaker_id,名称,描述
   speakers:
     - "test1,张三,张三是一个程序员"
@@ -423,19 +423,18 @@ ASR:
     model_name: qwen3-asr-flash
     output_dir: tmp/
     # ASR选项配置
-    enable_lid: true  # 自动语种检测
-    enable_itn: true  # 逆文本归一化
+    enable_lid: true # 自动语种检测
+    enable_itn: true # 逆文本归一化
     #language: "zh"  # 语种，支持zh、en、ja、ko等
-    context: ""  # 上下文信息，用于提高识别准确率，不超过10000 Token
+    context: "" # 上下文信息，用于提高识别准确率，不超过10000 Token
 
-  
 VAD:
   SileroVAD:
     type: silero
     threshold: 0.5
     threshold_low: 0.3
     model_dir: models/snakers4_silero-vad
-    min_silence_duration_ms: 200  # 如果说话停顿比较长，可以把这个值设置大一些
+    min_silence_duration_ms: 200 # 如果说话停顿比较长，可以把这个值设置大一些
 
 LLM:
   # 所有openai类型均可以修改超参，以AliLLM为例
@@ -447,11 +446,11 @@ LLM:
     base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
     model_name: qwen-turbo
     api_key: 你的deepseek web key
-    temperature: 0.7  # 温度值
-    max_tokens: 500   # 最大生成token数
+    temperature: 0.7 # 温度值
+    max_tokens: 500 # 最大生成token数
     top_p: 1
     top_k: 50
-    frequency_penalty: 0  # 频率惩罚
+    frequency_penalty: 0 # 频率惩罚
   AliAppLLM:
     # 定义LLM API类型
     type: AliBL
@@ -493,7 +492,7 @@ LLM:
     # 定义LLM API类型
     type: ollama
     model_name: qwen2.5 #  使用的模型名称，需要预先使用ollama pull下载
-    base_url: http://localhost:11434  # Ollama服务地址
+    base_url: http://localhost:11434 # Ollama服务地址
   DifyLLM:
     # 定义LLM API类型
     type: dify
@@ -513,7 +512,7 @@ LLM:
     # 若部署地无法访问接口，需要开启科学上网
     api_key: 你的gemini web key
     model_name: "gemini-2.0-flash"
-    http_proxy: ""  #"http://127.0.0.1:10808"
+    http_proxy: "" #"http://127.0.0.1:10808"
     https_proxy: "" #http://127.0.0.1:10808"
   CozeLLM:
     # 定义LLM API类型
@@ -562,21 +561,21 @@ LLM:
     # 定义LLM API类型
     type: xinference
     # Xinference服务地址和模型名称
-    model_name: qwen2.5:72b-AWQ  # 使用的模型名称，需要预先在Xinference启动对应模型
-    base_url: http://localhost:9997  # Xinference服务地址
+    model_name: qwen2.5:72b-AWQ # 使用的模型名称，需要预先在Xinference启动对应模型
+    base_url: http://localhost:9997 # Xinference服务地址
   XinferenceSmallLLM:
     # 定义轻量级LLM API类型，用于意图识别
     type: xinference
     # Xinference服务地址和模型名称
-    model_name: qwen2.5:3b-AWQ  # 使用的小模型名称，用于意图识别
-    base_url: http://localhost:9997  # Xinference服务地址
+    model_name: qwen2.5:3b-AWQ # 使用的小模型名称，用于意图识别
+    base_url: http://localhost:9997 # Xinference服务地址
 # VLLM配置（视觉语言大模型）
 VLLM:
   ChatGLMVLLM:
     type: openai
     # glm-4v-flash是智谱免费AI的视觉模型，需要先在智谱AI平台创建API密钥并获取api_key
     # 可在这里找到你的api key https://bigmodel.cn/usercenter/proj-mgmt/apikeys
-    model_name: glm-4v-flash  # 智谱AI的视觉模型
+    model_name: glm-4v-flash # 智谱AI的视觉模型
     url: https://open.bigmodel.cn/api/paas/v4/
     api_key: 你的api_key
   QwenVLVLLM:
@@ -663,8 +662,11 @@ TTS:
     output_dir: tmp/
     response_format: wav
     reference_id: null
-    reference_audio: ["config/assets/wakeup_words.wav",]
-    reference_text: ["哈啰啊，我是小智啦，声音好听的台湾女孩一枚，超开心认识你耶，最近在忙啥，别忘了给我来点有趣的料哦，我超爱听八卦的啦",]
+    reference_audio: ["config/assets/wakeup_words.wav"]
+    reference_text:
+      [
+        "哈啰啊，我是小智啦，声音好听的台湾女孩一枚，超开心认识你耶，最近在忙啥，别忘了给我来点有趣的料哦，我超爱听八卦的啦",
+      ]
     normalize: true
     max_new_tokens: 1024
     chunk_length: 200
@@ -723,7 +725,7 @@ TTS:
     sample_steps: 32
     if_sr: false
   MinimaxTTSHTTPStream:
-  # Minimax流式语音合成服务
+    # Minimax流式语音合成服务
     type: minimax_httpstream
     output_dir: tmp/
     group_id: 你的minimax平台groupID
@@ -787,7 +789,7 @@ TTS:
     output_dir: tmp/
     appkey: 你的阿里云智能语音交互服务项目Appkey
     token: 你的阿里云智能语音交互服务AccessToken，临时的24小时，要长期用下方的access_key_id，access_key_secret
-    voice: longxiaochun 
+    voice: longxiaochun
     access_key_id: 你的阿里云账号access_key_id
     access_key_secret: 你的阿里云账号access_key_secret
     # 截至2025年7月21日大模型音色只有北京节点采用，其他节点暂不支持
@@ -907,12 +909,12 @@ TTS:
     #流式传输请参考 https://github.com/PaddlePaddle/PaddleSpeech/wiki/PaddleSpeech-Server-WebSocket-API
     type: paddle_speech
     protocol: websocket # protocol choices = ['websocket', 'http']
-    url: ws://127.0.0.1:8092/paddlespeech/tts/streaming  # TTS 服务的 URL 地址，指向本地服务器 [websocket默认ws://127.0.0.1:8092/paddlespeech/tts/streaming，http默认http://127.0.0.1:8090/paddlespeech/tts]
-    spk_id: 0  # 发音人 ID，0 通常表示默认的发音人
-    sample_rate: 24000  # 采样率 [websocket默认24000，http默认0 自动选择]
-    speed: 1.0  # 语速，1.0 表示正常语速，>1 表示加快，<1 表示减慢
-    volume: 1.0  # 音量，1.0 表示正常音量，>1 表示增大，<1 表示减小
-    save_path:   # 保存路径
+    url: ws://127.0.0.1:8092/paddlespeech/tts/streaming # TTS 服务的 URL 地址，指向本地服务器 [websocket默认ws://127.0.0.1:8092/paddlespeech/tts/streaming，http默认http://127.0.0.1:8090/paddlespeech/tts]
+    spk_id: 0 # 发音人 ID，0 通常表示默认的发音人
+    sample_rate: 24000 # 采样率 [websocket默认24000，http默认0 自动选择]
+    speed: 1.0 # 语速，1.0 表示正常语速，>1 表示加快，<1 表示减慢
+    volume: 1.0 # 音量，1.0 表示正常音量，>1 表示增大，<1 表示减小
+    save_path: # 保存路径
   IndexStreamTTS:
     # 基于Index-TTS-vLLM项目的TTS接口服务
     # 参照教程：https://github.com/Ksuriuri/index-tts-vllm/blob/master/README.md
