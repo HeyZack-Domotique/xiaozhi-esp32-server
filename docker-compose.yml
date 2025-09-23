@@ -49,9 +49,9 @@ services:
       - default
     ports:
       # ws server
-      - "8000:8000"
+      - 8000
       # The port of the http service, used for visual analysis interface
-      - "8003:8003"
+      - 8003
     security_opt:
       - seccomp:unconfined
     environment:
@@ -81,7 +81,7 @@ services:
         condition: service_healthy
     ports:
       # 智控台
-      - "8002:8002"
+      - 8002
     environment:
       - TZ=Europe/Paris
       - SPRING_DATASOURCE_DRUID_URL=${SPRING_DATASOURCE_DRUID_URL:-jdbc:mysql://xiaozhi-esp32-server-db:3306/xiaozhi_esp32_server?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Europe/Paris&nullCatalogMeansCurrent=true&connectTimeout=30000&socketTimeout=30000&autoReconnect=true&failOverReadOnly=false&maxReconnects=10}
