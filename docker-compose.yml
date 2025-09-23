@@ -32,6 +32,8 @@ services:
         secret: $${MANAGER_API_SECRET}
       EOF
         echo "Configuration file generated successfully"
+        cat /app/data/.config.yaml
+        echo "--------------------------------"
         chmod 644 /app/data/.config.yaml
       '
     restart: "no"

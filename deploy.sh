@@ -36,6 +36,13 @@ server:
   http_port: ${SERVER_HTTP_PORT}
   # Vision analysis interface address
   vision_explain: ${SERVER_VISION_EXPLAIN}
+  auth:
+    enabled: ${AUTH_ENABLED}
+    allowed_devices:
+      - "${ALLOWED_DEVICES}"
+    tokens:
+      - token: "${TOKEN}"
+      name: "${NAME}"
 
 manager-api:
   # Manager-api address

@@ -16,7 +16,7 @@ This guide explains how to deploy xiaozhi-esp32-server on Dokploy with proper co
    - Go to your application settings in Dokploy
    - Add the following environment variables:
 
-   ```
+   ```bash
    MANAGER_API_SECRET=your-actual-secret-from-manager-api
    SERVER_IP=0.0.0.0
    SERVER_PORT=8000
@@ -29,6 +29,7 @@ This guide explains how to deploy xiaozhi-esp32-server on Dokploy with proper co
 
 2. **Add Build Command:**
    In Dokploy, set the build command to:
+
    ```bash
    chmod +x deploy.sh && ./deploy.sh
    ```
@@ -43,6 +44,7 @@ This guide explains how to deploy xiaozhi-esp32-server on Dokploy with proper co
 
 2. **Use Override File:**
    In Dokploy, set the Docker Compose file to:
+
    ```bash
    docker-compose -f docker-compose.yml -f docker-compose.dokploy.yml up -d
    ```
@@ -71,11 +73,13 @@ This guide explains how to deploy xiaozhi-esp32-server on Dokploy with proper co
 After deployment, verify the configuration:
 
 1. **Check Container Logs:**
+
    ```bash
    docker logs xiaozhi-esp32-server
    ```
 
 2. **Verify Config File:**
+
    ```bash
    docker exec xiaozhi-esp32-server cat /opt/xiaozhi-esp32-server/data/.config.yaml
    ```
@@ -88,16 +92,19 @@ After deployment, verify the configuration:
 ## Troubleshooting
 
 ### Config File Not Found
+
 - Ensure the `deploy.sh` script ran successfully
 - Check that `MANAGER_API_SECRET` environment variable is set
 - Verify the `data` directory has correct permissions
 
 ### Connection Issues
+
 - Verify all services are running: `docker ps`
 - Check network connectivity between containers
 - Ensure ports are properly exposed in Dokploy
 
 ### Secret Mismatch
+
 - Regenerate the secret in manager-api parameter management
 - Update the `MANAGER_API_SECRET` environment variable
 - Restart the xiaozhi-esp32-server container
